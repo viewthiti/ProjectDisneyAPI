@@ -7,9 +7,7 @@ import mysql from "mysql";
 export const router = express.Router();
 
 router.get("/", (req, res) => {
-  conn.query('select * from lmage', (err, result, fields) => {
-    console.log(result);
-    
+  conn.query('select * from Users', (err, result, fields) => {
     res.json(result);
   });
 });
@@ -49,9 +47,14 @@ router.post("/login", (req, res) => {
     }
 
     if (result.length > 0) {
-      res.json({ message: "Match found" });
+      const user = result[0];
+      res.json({
+        message: 'Match found',
+        userID: user.id,
+        typeID: user.typeID
+      });
     } else {
-      res.json({ message: "No match found" });
+      res.json({ message: 'No match found' });
     }
   });
 });
@@ -84,9 +87,3 @@ router.post("/", (req, res) => {
     });
   });
 })
-
-// router.get("/profile", (req, res) => {
-//   conn.query('select * from Image', (err, result, fields) => {
-//     res.json(result);
-//   });
-// });
