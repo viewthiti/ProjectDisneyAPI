@@ -38,7 +38,7 @@ router.post("/login", (req, res) => {
   const { email } = req.body;
   const {password} = req.body;
 
-  const sql = "SELECT email FROM Users WHERE email = ? AND password = ?";
+  const sql = "SELECT * FROM Users WHERE email = ? AND password = ?";
 
   conn.query(sql, [email, password], (err, result, fields) => {
     if (err) {
