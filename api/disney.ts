@@ -7,7 +7,9 @@ import mysql from "mysql";
 export const router = express.Router();
 
 router.get("/", (req, res) => {
-  conn.query('select * from Users', (err, result, fields) => {
+  conn.query('select * from lmage', (err, result, fields) => {
+    console.log(result);
+    
     res.json(result);
   });
 });
@@ -82,3 +84,9 @@ router.post("/", (req, res) => {
     });
   });
 })
+
+// router.get("/profile", (req, res) => {
+//   conn.query('select * from Image', (err, result, fields) => {
+//     res.json(result);
+//   });
+// });
