@@ -12,25 +12,32 @@ router.get("/", (req, res) => {
   });
 });
 
-// LOGIN GET ยังทำไม่ได้ อิอิ
-router.get("/login/eiei", (req, res) => {
+router.get("/email", (req, res) => {
   const email = req.query.email;
-
-  const sql = "SELECT email FROM Users WHERE email = ?";
-
-  conn.query(sql, [email], (err, result, fields) => {
-    if (err) {
-      res.status(500).json({ message: "An error occurred" });
-      return;
-    }
-
-    if (result.length > 0 ) {
-      res.json({ message: "Match found" });
-    } else {
-      res.json({ message: "No match found" });
-    }
+  conn.query('select email from Users where email = ?',[email], (err, result, fields) => {
+    res.json(result);
   });
 });
+
+// LOGIN GET ยังทำไม่ได้ อิอิ
+// router.get("/login", (req, res) => {
+//   const email = req.query.email;
+
+//   const sql = "SELECT email FROM Users WHERE email = ?";
+
+//   conn.query(sql, [email], (err, result, fields) => {
+//     if (err) {
+//       res.status(500).json({ message: "An error occurred" });
+//       return;
+//     }
+
+//     if (result.length > 0 ) {
+//       res.json({ message: "Match found" });
+//     } else {
+//       res.json({ message: "No match found" });
+//     }
+//   });
+// });
 
 
 // LOGIN POST
