@@ -50,8 +50,7 @@ router.post("/login", (req, res) => {
       const user = result[0];
       res.json({
         message: 'Match found',
-        userID: user.id,
-        typeID: user.typeID
+        result
       });
     } else {
       res.json({ message: 'No match found' });
