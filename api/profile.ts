@@ -1,5 +1,5 @@
 import express from "express";
-import { conn } from "../dbconnect";
+import { conn, queryAsync } from "../dbconnect";
 import { Disney } from "../model/disney_get_res";
 import mysql from "mysql";
 
@@ -41,6 +41,44 @@ router.get("/main", (req, res) => {
       res.json(result);
   });
 });
+
+router.put("/:id", async (req, res) => {
+  // รับข้อมูล
+  let id = +req.params.id;
+  let user: Disney = req.body;
+
+  // get ช้อมูลเดิมด้วย id
+  let sql = "select * from Users where userID = ?;";
+  sql = mysql.format(sql, [id]);
+
+  //Query เอาข้อมูลเดิม
+  let result = await queryAsync(sql);
+  const jsonStr = JSON.stringify(result);
+  const jsonObj = JSON.parse(jsonStr);
+  let userOriginal: Disney = jsonObj[0];
+  //Merge new data
+  const updateUser = {...userOriginal,...user}
+  //update
+  // Pre SQL
+   sql =
+    "update  `Users` set `username`=?, `email`=?, `password`=?, `imgUser`=? where `userID`=?";
+  sql = mysql.format(sql, [
+    updateUser.username,
+    updateUser.email,
+    updateUser.password,
+    updateUser.imgUser,
+    id,
+  ]);
+  //   send SQL
+  conn.query(sql, (err, result) => {
+    if (err) throw err;
+    res.status(201).json({ affected_row: result.affectedRows });
+  });
+});
+
+
+
+
 
 
 
