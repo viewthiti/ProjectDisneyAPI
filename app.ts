@@ -1,6 +1,6 @@
 import express from "express";
 import { router as disney } from "./api/disney";
-import { router as profile } from "./api/disney";
+import { router as profile } from "./api/profile";
 import bodyParser from "body-parser";
 import cors from "cors";
 
@@ -10,6 +10,7 @@ export const app = express();
 // });
 app.use(
   cors({
+    // origin: "*",
     origin: "http://localhost:4200",
   })
 );
