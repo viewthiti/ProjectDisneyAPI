@@ -71,16 +71,21 @@ router.post("/", fileUpload.diskLoader.single("file"), async (req, res) => {
 
   const url = await getDownloadURL(snapshot.ref);
   res.status(200).json({
-    file: url,
+    url: url,
   });
+
 });
 
 // ADD ข้อมูล ใช้ POST
 router.post("/img/", (req, res) => {
   const img: lmage = req.body;
   let sql =
-    "INSERT INTO `lmage`(`userID`, `url`, `imgName`, `uploadDay`) VALUES (?, ?, ?, NOW())";
-  sql = mysql.format(sql, [img.userID, img.url, img.imgName, img.uploadDay]);
+    "INSERT INTO `lmage`(`userID`, `url`, `uploadDay`) VALUES (?, ?, NOW())";
+  sql = mysql.format(sql, [
+    img.userID, 
+    img.url, 
+    img.uploadDay
+  ]);
 
   // Send sql to database
   conn.query(sql, (err, result) => {

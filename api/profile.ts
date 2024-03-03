@@ -24,8 +24,6 @@ router.get("/", (req, res) => {
   });
 });
 
-<<<<<<< HEAD
-=======
 //get image.userID = users.userID
 router.get("/idm", (req, res) => {
   const id = req.query.id;
@@ -35,7 +33,6 @@ router.get("/idm", (req, res) => {
   });
 });
 
->>>>>>> 242606a488fba68384237cdff1f270e3c32436b6
 // grt ID
 router.get("/main", (req, res) => {
   const id = req.query.id;
