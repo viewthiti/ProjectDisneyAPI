@@ -27,7 +27,8 @@ router.get("/", (req, res) => {
 //get image.userID = users.userID
 router.get("/idm", (req, res) => {
   const id = req.query.id;
-  const sql = `SELECT Users.* FROM lmage JOIN Users ON lmage.userID = Users.userID WHERE lmage.imgID = ?`; conn.query(sql, [id], (err, result) => {
+  const sql = `SELECT Users.* FROM lmage JOIN Users ON lmage.userID = Users.userID WHERE lmage.imgID = ?`; 
+  conn.query(sql, [id], (err, result) => {
     // console.log(result);
     res.json(result);
   });
@@ -42,6 +43,8 @@ router.get("/main", (req, res) => {
   });
 });
 
+
+// update profile
 router.put("/:id", async (req, res) => {
   // รับข้อมูล
   let id = +req.params.id;
