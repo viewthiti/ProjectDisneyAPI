@@ -73,10 +73,11 @@ router.post("/", fileUpload.diskLoader.single("file"), async (req, res) => {
   res.status(200).json({
     file: url,
   });
+
 });
 
 // ADD ข้อมูล ใช้ POST
-router.post("/img/", (req, res) => {
+router.post("/img/add", (req, res) => {
   const img: lmage = req.body;
   let sql =
     "INSERT INTO `lmage`(`userID`, `url`, `imgName`, `uploadDay`) VALUES (?, ?, ?, NOW())";
