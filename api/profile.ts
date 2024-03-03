@@ -24,15 +24,6 @@ router.get("/", (req, res) => {
   });
 });
 
-//get image.userID = users.userID
-router.get("/idm", (req, res) => {
-  const id = req.query.id;
-  const sql = "SELECT Users.* FROM lmage JOIN Users ON lmage.userID = Users.userID WHERE lmage.imgID = ?";
-  conn.query(sql, [id], (err, result) => {
-      res.json(result);
-  });
-});
-
 // grt ID
 router.get("/main", (req, res) => {
   const id = req.query.id;
