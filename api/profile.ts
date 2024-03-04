@@ -80,6 +80,22 @@ router.put("/:id", async (req, res) => {
 });
 
 
+//เอารูปของมาโชว์
+router.get("/show", (req, res) => {
+  const id = req.query.userID;
+  const sql = `SELECT Users.username, Users.email, lmage.url, lmage.imgID FROM Users JOIN lmage ON lmage.userID = Users.userID WHERE Users.userID = ?`;
+  conn.query(sql, [id], (err, result) => {
+    if (err) {
+      console.error(err);
+      res.status(500).json({ error: 'Internal server error' });
+      return;
+    }
+    res.json(result);
+  });
+});
+
+
+
 
 
 
