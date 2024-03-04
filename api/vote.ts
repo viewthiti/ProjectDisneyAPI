@@ -15,6 +15,15 @@ router.get("/", (req, res) => {
     });
 });
 
+router.get("/:imgID", (req, res) => {
+    let id = req.params.imgID;
+    const sql = "SELECT imgID ,sum(score) as total_score FROM Vote where imgID = ?";
+    conn.query(sql, [id], (err, result) => {
+        res.json(result);
+
+    });
+});
+
 //กำหนดรูปภาพที่เข้ามา
 router.post("/newimg", (req, res) => {
     const vote: Vote = req.body;
