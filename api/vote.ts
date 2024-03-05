@@ -30,11 +30,10 @@ router.post("/newimg", (req, res) => {
     console.log(req.body);
     if (true) {
         let sql =
-            "INSERT INTO `Vote`(`imgID`, `score`, `date`) VALUES (?,?,NOW())";
+            "INSERT INTO `Vote`(`imgID`, `score`, `date`) VALUES (?,?,NOW()) ";
         sql = mysql.format(sql, [
             vote.imgID,
-            1000,
-            vote.data
+            1000
         ]);
         conn.query(sql, (err, result) => {
             if (err) throw err;

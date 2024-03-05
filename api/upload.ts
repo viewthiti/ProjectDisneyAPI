@@ -83,7 +83,7 @@ router.post("/img/", (req, res) => {
     "INSERT INTO `lmage`(`userID`, `url`, `uploadDay`) VALUES (?, ?, NOW())";
   sql = mysql.format(sql, [
     img.userID, 
-    img.url, 
+    img.url,
     img.uploadDay
   ]);
 
@@ -93,6 +93,9 @@ router.post("/img/", (req, res) => {
     //return data
     res.status(201).json({
       affected_row: result.affectedRows,
+      last_idx: result.insertId
     });
   });
 });
+
+
