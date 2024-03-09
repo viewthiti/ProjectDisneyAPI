@@ -43,43 +43,6 @@ router.get("/main", (req, res) => {
   });
 });
 
-
-// update profile
-router.put("/:id", async (req, res) => {
-  // รับข้อมูล
-  let id = +req.params.id;
-  let user: Disney = req.body;
-
-  // get ช้อมูลเดิมด้วย id
-  let sql = "select * from Users where userID = ?;";
-  sql = mysql.format(sql, [id]);
-
-  //Query เอาข้อมูลเดิม
-  let result = await queryAsync(sql);
-  const jsonStr = JSON.stringify(result);
-  const jsonObj = JSON.parse(jsonStr);
-  let userOriginal: Disney = jsonObj[0];
-  //Merge new data
-  const updateUser = { ...userOriginal, ...user }
-  //update
-  // Pre SQL
-  sql =
-    "update  `Users` set `username`=?, `email`=?, `password`=?, `imgUser`=? where `userID`=?";
-  sql = mysql.format(sql, [
-    updateUser.username,
-    updateUser.email,
-    updateUser.password,
-    updateUser.imgUser,
-    id,
-  ]);
-  //   send SQL
-  conn.query(sql, (err, result) => {
-    if (err) throw err;
-    res.status(201).json({ affected_row: result.affectedRows });
-  });
-});
-
-
 //เอารูปของมาโชว์
 router.get("/show", (req, res) => {
   const id = req.query.userID;
@@ -102,22 +65,18 @@ router.put("/:userID", async (req, res) => {
   const profile: Disney = req.body;
 
   //GET original data from table by id
-  let sql = "select * from trip where userID = ?";
+  let sql = "select * from Users where userID = ?";
   sql = mysql.format(sql, [id]);
 
   //Query and Wait for result 
   const result = await queryAsync(sql);
   const jsonStr = JSON.stringify(result);
   const jsonObj = JSON.parse(jsonStr);
-  const tripOriginal: Disney = jsonObj[0];
+  const disneyOriginal: Disney = jsonObj[0];
 
-  //Merge new data to original
-  const updateprofile = { ...tripOriginal, ...profile };
-
-  //Updateed 
-  //Prepar SQL
+  const updateprofile = { ...disneyOriginal, ...profile };
   sql =
-      "update  `profile` set `username`=?, `email`=?, `password`=? where `userID`=?";
+      "update  `Users` set `username`=?, `email`=?, `password`=? where `userID`=?";
 
   sql = mysql.format(sql, [
     updateprofile.username,
