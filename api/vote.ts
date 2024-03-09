@@ -45,8 +45,19 @@ router.post("/newimg", (req, res) => {
     }
 });
 
-// update ranking
 
+// update ranking
+router.get("/rank/score", (req, res) => {
+    let sql = `SELECT lmage.imgID, lmage.imgName, lmage.url, SUM(Vote.score) AS total_score FROM Vote JOIN lmage ON Vote.imgID = lmage.imgID GROUP BY lmage.imgID ORDER BY total_score DESC LIMIT 10`;
+    conn.query(sql, (err, result) => {
+        if (err) {
+            console.error("Error retrieving data:", err);
+            res.status(500).send("Error retrieving data");
+            return;
+        }
+        res.json(result);
+    });
+});
 
 
 
@@ -72,6 +83,7 @@ router.post("/win", (req, res) => {
         });
     }
 });
+
 
 router.post("/lose", (req, res) => {
     const vote: Vote = req.body;

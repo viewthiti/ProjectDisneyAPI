@@ -95,5 +95,45 @@ router.get("/show", (req, res) => {
 });
 
 
+// เเก้ไขชื่อ
+router.put("/:userID", async (req, res) => {
+  // Receive data 
+  const id = +req.params.userID;
+  const profile: Disney = req.body;
+
+  //GET original data from table by id
+  let sql = "select * from trip where userID = ?";
+  sql = mysql.format(sql, [id]);
+
+  //Query and Wait for result 
+  const result = await queryAsync(sql);
+  const jsonStr = JSON.stringify(result);
+  const jsonObj = JSON.parse(jsonStr);
+  const tripOriginal: Disney = jsonObj[0];
+
+  //Merge new data to original
+  const updateprofile = { ...tripOriginal, ...profile };
+
+  //Updateed 
+  //Prepar SQL
+  sql =
+      "update  `profile` set `username`=?, `email`=?, `password`=? where `userID`=?";
+
+  sql = mysql.format(sql, [
+    updateprofile.username,
+    updateprofile.email,
+    updateprofile.password,
+    id
+  ]);
+  conn.query(sql, (err, result) => {
+      if (err) throw err;
+      res.status(200).json({
+          affected_row: result.affectedRows
+      });
+  });
+});
+
+
+
 
 
