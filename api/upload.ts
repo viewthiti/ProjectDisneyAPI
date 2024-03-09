@@ -16,6 +16,7 @@ import {
   ref,
   uploadBytesResumable,
   getDownloadURL,
+  deleteObject,
 } from "firebase/storage";
 import { conn } from "../dbconnect";
 import { lmage } from "../model/Image_get_res";
@@ -97,5 +98,41 @@ router.post("/img/", (req, res) => {
     });
   });
 });
+
+router.delete("/:id", (req, res) => {
+  const imgID = req.params.id;
+  
+  let sql = "SELECT url FROM lmage WHERE imgID = ?";
+  sql = mysql.format(sql, [
+    imgID
+  ]);
+  conn.query(sql, async (err, result)=>{
+      if (err) {
+          res.status(400).json(err);
+      }
+      const imagePath = result[0].ImageURL; // Assuming ImageURL contains the filename
+      sql = "DELETE FROM Posts WHERE imgID = ?";
+      // Construct the storage reference using the correct path
+      const storageRef = ref(storage, imagePath);
+      
+      try {
+          await deleteObject(storageRef);
+          console.log('Image deleted successfully');
+      } catch (error) {
+          res.status(501).json({ error: 'Error deleting image from storage' });
+          return;
+      }
+      
+      conn.query(sql, [imgID], (err, result) => {
+          if (err) throw err;
+          res.status(201).json({
+              affected_row: result.affectedRows
+          });
+      });
+  });
+});
+
+
+
 
 

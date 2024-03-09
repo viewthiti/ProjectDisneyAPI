@@ -87,8 +87,7 @@ router.post("/win", (req, res) => {
 
 router.post("/lose", (req, res) => {
     const vote: Vote = req.body;
-    console.log(req.body);
-
+    // console.log(req.body);
     if (true) {
         let sql =
             "INSERT INTO `Vote`(`imgID`, `LossWin`, `score`, `date`) VALUES (?,?,?,NOW())";
