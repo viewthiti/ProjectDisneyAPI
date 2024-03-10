@@ -19,26 +19,6 @@ router.get("/email", (req, res) => {
   });
 });
 
-// LOGIN GET ยังทำไม่ได้ อิอิ
-// router.get("/login", (req, res) => {
-//   const email = req.query.email;
-
-//   const sql = "SELECT email FROM Users WHERE email = ?";
-
-//   conn.query(sql, [email], (err, result, fields) => {
-//     if (err) {
-//       res.status(500).json({ message: "An error occurred" });
-//       return;
-//     }
-
-//     if (result.length > 0 ) {
-//       res.json({ message: "Match found" });
-//     } else {
-//       res.json({ message: "No match found" });
-//     }
-//   });
-// });
-
 
 // LOGIN POST
 router.post("/login", (req, res) => {
