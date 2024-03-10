@@ -99,6 +99,7 @@ router.post("/img/", (req, res) => {
   });
 });
 
+// delete
 router.delete("/:id", (req, res) => {
   const imgID = req.params.id;
   
