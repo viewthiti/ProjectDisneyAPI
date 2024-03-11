@@ -4,6 +4,7 @@ import { router as profile } from "./api/profile";
 import { router as upload } from "./api/upload";
 import { router as vote } from "./api/vote";
 import { router as edit } from "./api/edit";
+import { router as rank } from "./api/rank";
 import bodyParser from "body-parser";
 import cors from "cors";
 
@@ -13,8 +14,8 @@ export const app = express();
 // });
 app.use(
   cors({
-    // origin: "*",
-    origin: "http://localhost:4200",
+    origin: "*",
+    // origin: "http://localhost:4200",
   })  
 );
 
@@ -27,6 +28,7 @@ app.use("/upload", upload);
 app.use("/uploads", express.static("uploads"));
 app.use("/vote", vote);
 app.use("/edit", edit);
+app.use("/rank", rank);
 
 
 
