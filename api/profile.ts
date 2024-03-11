@@ -44,6 +44,20 @@ router.get("/main", (req, res) => {
 });
 
 
+router.get("/showall", (req, res) => {
+  const id = req.query.userID;
+  const sql = `SELECT username, email, imgUser FROM Users  WHERE userID = ?`;
+  conn.query(sql, [id], (err, result) => {
+    if (err) {
+      console.error(err);
+      res.status(500).json({ error: 'Internal server error' });
+      return;
+    }
+    res.json(result);
+  });
+});
+
+
 //เอารูปของมาโชว์
 router.get("/show", (req, res) => {
   const id = req.query.userID;
