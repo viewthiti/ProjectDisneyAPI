@@ -13,8 +13,8 @@ export const app = express();
 // });
 app.use(
   cors({
-    origin: "*",
-    // origin: "http://localhost:4200",
+    // origin: "*",
+    origin: "http://localhost:4200",
   })  
 );
 
