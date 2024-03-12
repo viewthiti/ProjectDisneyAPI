@@ -34,3 +34,11 @@ router.get("/yesterday/:id", (req, res) => {
         res.json(result);
     })
 });
+
+// router.get("/yesterday/:id", (req, res) => {
+//     const imgID = req.params.id;
+//     const sql = "SELECT statistics.* FROM statistics WHERE imgID = ? AND DATE(statistics.date) = DATE_SUB(CURDATE(), INTERVAL 1 DAY) Order By sid DESC LIMIT 1";
+//     conn.query(sql,[imgID],  (err, result) => {
+//         res.json(result);
+//     })
+// });
