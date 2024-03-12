@@ -34,3 +34,11 @@ router.get("/yesterday/:id", (req, res) => {
         res.json(result);
     })
 });
+
+router.get("/graph/:id", (req, res) =>{
+    const imgID = req.params.id;
+    const sql = "SELECT * FROM statistics WHERE imgID = ?";
+    conn.query(sql,[imgID],  (err, result) => {
+        res.json(result);
+    })
+});
