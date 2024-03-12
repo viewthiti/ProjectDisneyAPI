@@ -35,10 +35,10 @@ router.get("/yesterday/:id", (req, res) => {
     })
 });
 
-// router.get("/yesterday/:id", (req, res) => {
-//     const imgID = req.params.id;
-//     const sql = "SELECT statistics.* FROM statistics WHERE imgID = ? AND DATE(statistics.date) = DATE_SUB(CURDATE(), INTERVAL 1 DAY) Order By sid DESC LIMIT 1";
-//     conn.query(sql,[imgID],  (err, result) => {
-//         res.json(result);
-//     })
-// });
+router.get("/graph/:id", (req, res) =>{
+    const imgID = req.params.id;
+    const sql = "SELECT *, DATE_FORMAT(date, '%d-%m-%Y') AS format_date FROM statistics WHERE imgID = ? ORDER BY sid LIMIT 7";
+    conn.query(sql,[imgID],  (err, result) => {
+        res.json(result);
+    })
+});
