@@ -16,15 +16,6 @@ router.get("/score", (req, res) => {
         }
         res.json(result);
     });
-    
-});
-
-router.get("/today", (req, res) => {
-    const imgID = req.body.imgID;
-    const sql = "SELECT statistics.* FROM statistics WHERE DATE(statistics.date) = CURDATE() AND imgID = ?";
-    conn.query(sql,[imgID],  (err, result) => {
-        res.json(result);
-    });
 });
 
 router.get("/yesterday/:id", (req, res) => {
@@ -41,4 +32,19 @@ router.get("/graph/:id", (req, res) =>{
     conn.query(sql,[imgID],  (err, result) => {
         res.json(result);
     })
+});
+
+router.get("/rankAll", (req, res) => {
+    let sql = `SELECT imgID, SUM(score) AS total_score FROM Vote GROUP BY imgID`;
+    conn.query(sql, (err, result) => {
+        if (err) {
+            res.status(500).send("Error retrieving data");
+            return;
+        }
+        result.sort((a: { total_score: number; }, b: { total_score: number; }) => b.total_score - a.total_score);
+        for (let i = 0; i < result.length; i++) {
+            result[i].rank = i + 1;
+        }
+        res.json(result);
+    });
 });
