@@ -7,7 +7,10 @@ export const router = express.Router();
 
 // update ranking
 router.get("/score", (req, res) => {
-    let sql = `SELECT lmage.imgID, lmage.imgName, lmage.url, SUM(Vote.score) AS total_score FROM Vote JOIN lmage ON Vote.imgID = lmage.imgID GROUP BY lmage.imgID ORDER BY total_score DESC LIMIT 10`;
+    let sql = `SELECT lmage.imgID, lmage.imgName, lmage.url, SUM(Vote.score) AS total_score 
+    FROM Vote JOIN lmage ON Vote.imgID = lmage.imgID 
+    GROUP BY lmage.imgID 
+    ORDER BY total_score DESC LIMIT 10`;
     conn.query(sql, (err, result) => {
         if (err) {
             console.error("Error retrieving data:", err);
@@ -62,7 +65,10 @@ router.get("/yesterday/:id", (req, res) => {
 
 router.get("/graph/:id", (req, res) =>{
     const imgID = req.params.id;
-    const sql = "SELECT *, DATE_FORMAT(date, '%d-%m-%Y') AS format_date FROM statistics WHERE imgID = ? ORDER BY sid LIMIT 7";
+    const sql = `SELECT *, DATE_FORMAT(date, '%d-%m-%Y') AS format_date
+    FROM statistics
+    WHERE imgID = ? AND date <= CURDATE() AND date >= CURDATE() - INTERVAL 6 DAY
+    ORDER BY sid`;
     conn.query(sql,[imgID],  (err, result) => {
         res.json(result);
     })
