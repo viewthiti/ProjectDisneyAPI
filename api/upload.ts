@@ -99,6 +99,27 @@ router.post("/img/", (req, res) => {
   });
 });
 
+router.put("/img/profile", (req, res) => {
+  const img: lmage = req.body;
+  let sql =
+    "UPDATE `Users` SET `imgUser` = ? WHERE `userID` = ?";
+  sql = mysql.format(sql, [
+    img.url,
+    img.userID
+  ]);
+
+  // Send sql to database
+  conn.query(sql, (err, result) => {
+    if (err) throw err;
+    //return data
+    res.status(200).json({
+      affected_row: result.affectedRows,
+      message: "Profile image updated successfully"
+    });
+  });
+});
+
+
 // delete
 router.delete("/:id", (req, res) => {
   const imgID = req.params.id;
