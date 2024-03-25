@@ -47,7 +47,7 @@ router.get("/main", (req, res) => {
 
 router.get("/showall", (req, res) => {
   const id = req.query.userID;
-  const sql = `SELECT username, email, imgUser FROM Users  WHERE userID = ?`;
+  const sql = `SELECT username, email, imgUser,typeID FROM Users  WHERE userID = ?`;
   conn.query(sql, [id], (err, result) => {
     if (err) {
       console.error(err);
