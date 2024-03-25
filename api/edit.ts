@@ -66,6 +66,21 @@ router.delete("/:imgID", (req, res) => {
   });
 });
 
+//ลบสถิติรายวันเก่าๆ เก่าของ id นั้นๆ
+router.delete("/stat/:imgID", (req, res) => {
+  const imgID = req.params.imgID;
+  let sql =  "DELETE FROM `statistics` WHERE imgID = ?";
+  sql = mysql.format(sql, [
+    imgID
+  ]);
+conn.query(sql, [imgID], (err, result) => {
+  if (err) throw err;
+  res.status(200).json({
+    affected_row: result.affectedRows,
+  });
+});
+});
+
 //change profile
 router.put("/img/change", (req, res) => {
     const img: lmage = req.body;
